@@ -1,0 +1,119 @@
+nav .nav-wrapper {
+    background-color: #E7ECF7; 
+}
+
+.section.white {
+    background-color: #E7ECF7 !important;
+}
+
+nav ul a {
+    color: #000;
+}
+
+.jumbotron {
+    background-color: #E7ECF7;
+    height: 250px;
+    width: 75%;
+}
+
+h1 {
+    padding-top: 30px;
+}
+
+#campgroundImage {
+    display: inline;
+}
+
+.card.small {
+    width: 300px;
+}
+
+.center-cols > .col {
+  float:none; /* disable the float */
+  display: inline-block; /* make blocks inline-block */
+  text-align: center; /* restore text-align to default */
+}
+
+/*img {*/
+/*    height: 270px;*/
+/*}*/
+
+
+.responsive-img {
+  padding-top: 50px; 
+  display: block;
+  padding-bottom: 15px;
+}
+
+h4{
+    font-size: 1.5rem;
+}
+
+
+#show {
+    width: 480px;
+    margin: 10px 10px;
+}
+
+.right-align {
+    display: inline;
+    float: right;
+}
+.card {
+     width: 500px;
+}
+ 
+.collection .collection-item {
+    list-style: none;
+}
+
+.card .card-title {
+    font-weight: 500;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: medium;
+}
+
+.card.small .card-action{
+    text-align: center;
+    font-size: small;
+    padding: 5px;
+} 
+
+.card.small {
+    height: 260px;
+}
+
+.btn{
+    padding: 0 1rem;
+    margin: 10px 10px;
+    font-size: .8em;
+    /*margin: auto;*/
+    margin-right: 10px;
+    height: 25px;
+    line-height: 26px;
+}
+
+.btn.delete, .btn.deleteComment{
+    background-color: crimson;
+}
+
+form {
+    width: 30%;
+}
+
+.btn.edit{
+    float: left;
+    text-decoration: none;
+    font-style: normal;
+    background-color: orange;
+}
+
+hr{
+    width: 53%;
+    float: left;
+}
+
+p {
+    margin-bottom: auto;
+}

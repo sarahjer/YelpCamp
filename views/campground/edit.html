@@ -1,0 +1,55 @@
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<div id="header"></div>
+<div class="container">
+    <div class="row" id="editForm">
+    </div><div><button class="btn btn-primary btn-lg btn-block " id="edit" >Submit!</button></div><a href="/campgrounds">Go Back</a>
+     </div>  </div>
+<div id="footer"></div>
+<script> 
+$(document).ready(function() {
+  $("#header").load("/partials/header.html"); 
+  $("#footer").load("/partials/footer.html");
+  var urlParams={};
+    window.location.search
+      .replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str,key,value) {
+        urlParams[key] = value;
+      }
+    );
+    $.get('https://webdevbootcamp-sarahjer.c9users.io/api/campgrounds/'+urlParams['id']+ '/edit', function(result){
+        var campground = JSON.parse(result).campgrounds;
+        var html = "";
+            html += ('<h1 style="text-align: center;">Edit ' + campground.name + '</h1><div style="width: 30%; margin: 25px auto">' +
+        '</div><div class="form-group"><input class="form-group" type="text" id="name" name="campground[name]" value = ' + campground.name +'>' +
+        '</div><div class="form-group"><input class="form-control" type="text" id="image" image="campground[image]" value =' + campground.image+' >' +
+        '</div><div class="form-group"><input class="form-control" type="text" id="description" description="campground[description]" value ='+ campground.description +'>');
+        
+    $("#editForm").append(html);
+});
+});
+$("#edit").click(function(){
+var editCamp = {
+    name: document.getElementById("name").value,
+    image: document.getElementById("image").value,
+    description: document.getElementById("description").value,
+};
+
+  var urlParams1={};
+    window.location.search
+      .replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str,key,value) {
+        urlParams1[key] = value;
+      });
+$.ajax({
+        url: 'https://webdevbootcamp-sarahjer.c9users.io/edit/'+ urlParams1['id'],
+        type: 'PUT', 
+        data: {name: editCamp.name, image: editCamp.image, description: editCamp.description},
+        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
+        success: function(data) {
+          console.log(data);
+            window.location.href = '/show/?id='+ urlParams1['id'];
+        },
+        error: function(data){
+          console.log(data);
+        }
+});
+});
+</script>

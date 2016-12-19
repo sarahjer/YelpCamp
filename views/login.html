@@ -1,0 +1,48 @@
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<div id="header"></div>
+
+<h4>Login</h4>
+
+<!--<form>-->
+    <input type = "text" name = "username" placeholder = "username" id = "username">
+    <input type = "password" name = "password" placeholder = "password" id = "password">
+    <button class="btn waves-effect waves-light" id="button">Login!</button>
+<!--</form>-->
+
+
+<div id="footer"></div>
+<script> 
+$(document).ready(function() {
+  $("#header").load("partials/header.html"); 
+  $("#footer").load("partials/footer.html");
+});
+
+$("#button").click( function(){
+    var credentials = {
+        username : document.getElementById("username").value,
+        password : document.getElementById("password").value
+    };
+        $.ajax({
+            url: 'https://webdevbootcamp-sarahjer.c9users.io/login',
+            type: 'POST', 
+            data: { username: credentials.username, password: credentials.password },
+            success: function(Data) {
+                     window.localStorage.setItem('token', Data.token);
+                     window.localStorage.setItem('User', credentials.username);
+                     window.localStorage.setItem('Username', Data.user.username);
+                     window.localStorage.setItem('userID', Data.user._id);
+                     if(Data.redirect) {
+                        window.location.href = Data.redirectURL;
+                     }
+                    },
+            
+            error: function() {
+                    alert('Error occured');
+                    }
+        });
+        
+});
+
+
+
+</script>

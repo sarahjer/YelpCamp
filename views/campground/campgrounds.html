@@ -1,0 +1,70 @@
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<div id="header"></div>
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1>Welcome to YelpCamp!</h1>
+            <p>View our handpicked campgrounds fromm all over the World!</p>
+            <p>
+                <a class="btn waves-effect waves-light" href="/campgrounds/new">Add New Campground<i class="material-icons right"></i></a>
+            </p>
+    </header>
+        <div class="row">
+            <div class="col s12">
+                
+            </div>
+        </div>
+        </div>
+        <div id="campgroundImage"></div>
+    
+
+<div id="footer"></div>
+<script> 
+$(document).ready(function() {
+  $("#header").load("../partials/header.html"); 
+  $("#footer").load("../partials/footer.html"); 
+ $.ajax({
+        url: 'https://webdevbootcamp-sarahjer.c9users.io/api/campgrounds',
+        type: 'GET', 
+        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
+        success: function(data) {
+            var campgrounds = JSON.parse(data);
+            $.each(campgrounds , function (i, campground) {
+                $.each(campground, function(j, campground){
+                    var html = "";
+                    html += ('<div class="row " style="width:420px; left:20px; display: inline-block; margin-right: 40px;">' +
+                                '<div class="col m4"><div class="card small" ><div class="card-title"></div>' +
+                                '<div class="card-image" id="campgroundImage">' + 
+                                    '<img src="' + campground.image + '"><span class="card-title" id="campgroundName">' + campground.name +
+                                '</div><div class="card-action"><a class="btn waves-effect waves-light" href="/show?id='+ campground._id+'">More Info</a></div></div></div></div></div>'); 
+                    $("#campgroundImage").append(html);
+        
+                }); 
+            });
+            return data;
+        },
+        error: function(data){
+          console.log(data);
+        }
+});
+
+// $.get('https://webdevbootcamp-sarahjer.c9users.io/api/campgrounds', function(result){
+//     var campgrounds = JSON.parse(result);
+//     $.each(campgrounds , function (i, campground) {
+//         $.each(campground, function(j, campground){
+//             var html = "";
+//             html += ('<div class="row " style="width:420px; left:20px; display: inline-block; margin-right: 40px;">' +
+//                         '<div class="col m4"><div class="card small" ><div class="card-title"></div>' +
+//                         '<div class="card-image" id="campgroundImage">' + 
+//                             '<img src="' + campground.image + '"><span class="card-title" id="campgroundName">' + campground.name +
+//                         '</div><div class="card-action"><a class="btn waves-effect waves-light" href="/show?id='+ campground._id+'">More Info</a></div></div></div></div></div>'); 
+//             $("#campgroundImage").append(html);
+
+//         }); 
+//         });
+
+//     return result;
+// });
+});
+
+</script> 

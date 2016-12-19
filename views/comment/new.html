@@ -1,0 +1,57 @@
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<div id="header"></div>
+<div class="container">
+    <div class="row">
+        <div id="comment"></div>
+        <div style="width: 30%; margin: 25px auto">
+            <div class="row">
+                <input  type="text" name="text" id="text" placeholder="text">
+            </div>
+                <button class="btn btn-small waves-effect waves-light" id="submit">Submit!</button>
+            <a style="display: block;" href="/campgrounds">Go Back</a>
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+<script> 
+$(document).ready(function() {
+  $("#header").load("/partials/header.html"); 
+  $("#footer").load("/partials/footer.html");
+  var urlParams={};
+    window.location.search
+      .replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str,key,value) {
+        urlParams[key] = value;
+      });
+    $.get('https://webdevbootcamp-sarahjer.c9users.io/api/campgrounds/'+urlParams['id']+ '/comments/new', function(result){
+        var campground = JSON.parse(result).campground;
+        var html = "";
+        html += '<h1 style="text-align: center;">Add New Comment to ' + campground.name + '</h1>';
+    $("#comment").append(html);
+
+$("#submit").click( function(){
+
+var text = document.getElementById("text").value;
+console.log(text);
+var urlParams1={};
+    window.location.search
+      .replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str,key,value) {
+        urlParams1[key] = value;
+      });
+$.ajax({
+        url: 'https://webdevbootcamp-sarahjer.c9users.io/comments/' + urlParams1['id'],
+        type: 'POST', 
+        data: { text: text},
+        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
+        success: function(data) {
+          console.log(data);
+            window.location.href = '/show/?id='+ urlParams1['id'];
+        },
+        error: function(data){
+          console.log(data);
+        }
+});
+});
+});
+});
+</script>

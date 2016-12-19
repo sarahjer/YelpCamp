@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YelpCamp</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.css">
+    <link rel="stylesheet" href="/stylesheets/main.css" type="text/css">
+</head>
+<body>
+    <nav>
+        <div class="nav nav-wrapper">
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li id="login"></li>
+                <li id="signup"></li>
+                <li id="signedin"></li>
+                <li id="logout"></li>
+            </ul>
+        </div>
+    </nav>
+<script>
+$(document).ready(function() {
+    var html1 = "",
+        html2 = "",
+        html3 = "",
+        html4 = "";
+        currentUser = window.localStorage.getItem('User'),
+        html1 += ('<a href="/login">Log In</a>'); 
+        html2 = ('<a href="/register">Sign Up</a>');
+        html3 += ('<a>Signed In As '+ currentUser +'</a>');
+        html4 += ('<a>Log Out</a>');
+    if(!(window.localStorage.getItem('token'))){
+    $('#login').append(html1);
+    $('#signup').append(html2);
+    } else {
+        $('#signedin').append(html3);
+        $('#logout').append(html4);
+    }
+});
+$('#logout').click(function(){
+    window.localStorage.removeItem('token');
+    // window.localStorage.removeItem('Username');
+    window.localStorage.removeItem('User');
+    // window.localStorage.removeItem('userID');
+    $('#logout').load('/login');
+});
+</script>

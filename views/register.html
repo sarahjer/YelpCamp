@@ -1,0 +1,43 @@
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<div id="header"></div>
+
+<h4>Sign Up</h4>
+
+
+    <input type="text" name = "username" placeholder="username" id="username">
+    <input type="password" name = "password" placeholder="password" id="password">
+    <button class="btn waves-effect waves-light" id="button">Sign Up</button>
+
+
+
+<div id="footer"></div>
+<script> 
+$(document).ready(function() {
+  $("#header").load("partials/header.html"); 
+  $("#footer").load("partials/footer.html");
+});
+$("#button").click( function(){
+    var credentials = {
+        username : document.getElementById("username").value,
+        password : document.getElementById("password").value
+    };
+   $.ajax({
+      url: 'https://webdevbootcamp-sarahjer.c9users.io/register',
+      type: 'POST', 
+      data: { username: credentials.username, password: credentials.password },
+      success: function(Data) {
+               console.log(Data.redirect);
+               window.localStorage.setItem('token', Data.token);
+               if(Data.redirect) {
+                  window.location.href = Data.redirectURL;
+               window.localStorage.setItem('user', credentials.username);
+               }
+              },
+      // headers: {"Authorization": window.localStorage.getItem('token')},
+      error: function() {
+              alert('Error occured');
+              }
+    });
+});
+
+</script>

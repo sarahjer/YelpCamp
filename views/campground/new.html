@@ -1,0 +1,58 @@
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<div id="header"></div>
+<div class="container">
+    <div class="row">
+      <div class="row">
+         <h4 style="text-align: center;">Create a New Campground</h4>
+        <div class="input-field col s6">
+          <input placeholder="Name" id="name" type="text" name="name" class="validate">
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="image" type="text" class="validate" name="image" placeholder="Image">
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="description" type="text" class="validate" name="description" placeholder="Description">
+        </div>
+      </div>
+      <button class="btn waves-effect waves-light" id="button1" type="submit" name="action">Submit
+      </button>
+    <a href="/campgrounds">Go Back</a>
+  </div>
+</div>
+
+<div id="footer"></div>
+<script> 
+$(document).ready(function() {
+  $("#header").load("../partials/header.html"); 
+  $("#footer").load("../partials/footer.html"); 
+if(!(window.localStorage.getItem('token'))){
+    window.location = '/login';
+}
+});
+$("#button1").click( function(){
+
+var camp = {
+  name: document.getElementById("name").value,
+  image: document.getElementById("image").value,
+  description: document.getElementById("description").value,
+};
+
+$.ajax({
+        url: 'https://webdevbootcamp-sarahjer.c9users.io/campgrounds/new',
+        type: 'POST', 
+        data: { name: camp.name, image: camp.image, description: camp.description},
+        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
+        success: function(data) {
+          console.log(data);
+            window.location.href = '/campgrounds';
+        },
+        error: function(data){
+          console.log(data);
+        }
+});
+});
+</script>

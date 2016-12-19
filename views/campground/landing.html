@@ -1,0 +1,22 @@
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<div id="header"></div>
+    </nav>
+      <div class="parallax-container">
+        <div class="parallax"><img src="/stylesheets/background.jpg"></div>
+      </div>
+      <div class="section white">
+        <div class="row container">
+          <h2 class="header">Welcome to YelpCamp!</h2>
+          <a class="grey-text text-darken-3 lighten-3" href="/campgrounds?_method=GET">View All Campgrounds</a>
+        </div>
+      </div>
+      <div class="parallax-container">
+        <div class="parallax"><img src="/stylesheets/background.jpg"></div>
+      </div>
+<div id="footer"></div>
+<script> 
+$(document).ready(function() {
+  $("#header").load("partials/header.html"); 
+  $("#footer").load("partials/footer.html");
+});
+</script>

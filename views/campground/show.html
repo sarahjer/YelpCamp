@@ -1,0 +1,106 @@
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<div id="header"></div>
+<div class = "container">
+    <div class="row">
+        <div class="col m3">
+            <p>YelpCamp</p>
+            <div class="collection">
+                <li class="collection-item active">Info 1</li>
+                <li class="collection-item">Info 2</li>
+                <li class="collection-item">Info 3</li>
+            </div>
+        </div>
+        <div class="col m9">
+            <div class="card card-image">
+                <div id="show">
+                    <!--<h4 class="right-align">$9.00/night</h4><h4><a><%= campground.name %></a></h4><p><%= campground.description %></p><p><em>Submitted By <%= campground.author.username %></em></p>-->
+                </div>
+                <div id ="editDelete"></div>
+            </div>
+            <div class="text-right" id="newcomment">
+                
+            </div>
+                <hr><div id ="comments"></div>
+            
+<div id="footer"></div>
+<script> 
+$(document).ready(function() {
+  $("#header").load("../partials/header.html"); 
+  $("#footer").load("../partials/footer.html");
+  var urlParams={};
+    window.location.search
+      .replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str,key,value) {
+        urlParams[key] = value;
+      });
+    $.get('https://webdevbootcamp-sarahjer.c9users.io/api/campgrounds/'+urlParams['id'], function(result){
+        var campground = JSON.parse(result).campgrounds;
+        var html = "";
+            html += ('<img class="responsive-img" src="'+ campground.image + '"><span><a>'+ campground.name +'</a></span>'+
+            '<span class="right-align">$9.00/night</span><p><em>'+ campground.description + '<p><em>Submitted By ' + campground.author.username + '</em></p>');
+        var html3 = "";
+            html3 += (' <a class="btn btn-small waves-light edit" href="/edit/?id='+ campground._id + '">Edit</a>' +
+            '</p></div><button class="btn btn-small waves-effect waves-light delete" style="display: inline;" id="delete">Delete</button>');
+        var html1 = "";
+            html1 = '<a class="btn btn-success" href="/comments/new/?id='+ campground._id +'">Add New Comment</a>';
+        $("#show").append(html);
+        console.log("******Campground Author INFO******");
+        console.log(campground.author.id);
+        var username = window.localStorage.getItem('Username');
+        var userID = window.localStorage.getItem('userID');
+        console.log("******USER ID INFO******");
+        console.log(userID);
+        $("#newcomment").append(html1);
+        var comment = JSON.parse(result).campgrounds.comments;
+        console.log(comment);
+            $.each(comment, function(i, comment){
+               var html2 = "";
+                html2 += ('<div class="row"><div class="col m6"><strong>' + comment.author.username  + '</strong><span class="right-align" id="date">' + 
+                comment.date + '</span><p>'+ comment.text + '</p><a class="btn btn-small waves-light edit" href="/comments/edit?id='+ campground._id +'&comment_id='+ comment._id +
+                '">Edit</a><a class="btn btn-small waves-effect waves-light deleteComment" >Delete</a>'); 
+                $("#comments").append(html2);
+            });
+            if(username && (campground.author.id == userID)){
+                $("#editDelete").append(html3);
+            }
+    });
+});
+
+$(document.body).on('click', '#delete', function(){
+var urlParams1={};
+    window.location.search
+      .replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str,key,value) {
+        urlParams1[key] = value;
+      });
+ $.ajax({
+    url: 'https://webdevbootcamp-sarahjer.c9users.io/campgrounds/'+urlParams1['id'],
+    type: 'DELETE',
+    success: function(data){
+        window.location.href = '/campgrounds';
+        console.log(data);
+    }, 
+    error: function(data) {
+        window.location.href = '/campgrounds';
+    }
+ });
+});
+
+$(document.body).on('click', '.deleteComment' ,function(){
+var urlParams2={};
+    window.location.search
+      .replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str,key,value) {
+        urlParams2[key] = value;
+      });
+ $.ajax({
+    url: 'https://webdevbootcamp-sarahjer.c9users.io/campgrounds/'+ urlParams2['id'] + '/comments/' + urlParams2['comment_id'],
+    type: 'DELETE',
+    success: function(data){
+        window.location.href = '/show/?id='+ urlParams2['id'];
+        console.log(data);
+    }, 
+    error: function(data) {
+        window.location.href = '/show/?id='+ urlParams2['id'];
+    }
+ });
+});
+
+</script>
