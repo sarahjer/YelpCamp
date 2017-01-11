@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>YelpCamp</title>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.css">
     <link rel="stylesheet" href="/stylesheets/main.css" type="text/css">
 </head>
@@ -17,6 +16,7 @@
             </ul>
         </div>
     </nav>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" ></script>
 <script>
 $(document).ready(function() {
     var html1 = "",
@@ -38,9 +38,9 @@ $(document).ready(function() {
 });
 $('#logout').click(function(){
     window.localStorage.removeItem('token');
-    // window.localStorage.removeItem('Username');
+    window.localStorage.removeItem('Username');
     window.localStorage.removeItem('User');
-    // window.localStorage.removeItem('userID');
-    $('#logout').load('/login');
+    window.localStorage.removeItem('userID');
+    window.location.href = ('/');
 });
 </script>

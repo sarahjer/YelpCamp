@@ -21,6 +21,7 @@
                 
             </div>
                 <hr><div id ="comments"></div>
+                
             
 <div id="footer"></div>
 <script> 
@@ -42,30 +43,35 @@ $(document).ready(function() {
             '</p></div><button class="btn btn-small waves-effect waves-light delete" style="display: inline;" id="delete">Delete</button>');
         var html1 = "";
             html1 = '<a class="btn btn-success" href="/comments/new/?id='+ campground._id +'">Add New Comment</a>';
+        
         $("#show").append(html);
-        console.log("******Campground Author INFO******");
-        console.log(campground.author.id);
         var username = window.localStorage.getItem('Username');
         var userID = window.localStorage.getItem('userID');
-        console.log("******USER ID INFO******");
-        console.log(userID);
         $("#newcomment").append(html1);
-        var comment = JSON.parse(result).campgrounds.comments;
-        console.log(comment);
-            $.each(comment, function(i, comment){
-               var html2 = "";
-                html2 += ('<div class="row"><div class="col m6"><strong>' + comment.author.username  + '</strong><span class="right-align" id="date">' + 
-                comment.date + '</span><p>'+ comment.text + '</p><a class="btn btn-small waves-light edit" href="/comments/edit?id='+ campground._id +'&comment_id='+ comment._id +
-                '">Edit</a><a class="btn btn-small waves-effect waves-light deleteComment" >Delete</a>'); 
-                $("#comments").append(html2);
-            });
-            if(username && (campground.author.id == userID)){
-                $("#editDelete").append(html3);
+        var comments = JSON.parse(result).campgrounds.comments;
+        $.each(comments, function(i, comment){
+            var html4 = "";
+            html4 = ('<a class="btn btn-small waves-light edit" href="/comments/edit?id='+ campground._id +'&comment_id='+ comment._id +
+                '">Edit</a><a class="btn btn-small waves-effect waves-light deleteComment" id=' + comment._id + ' >Delete</a>');
+            var html2 = "";
+            html2 += ('<div class="row"><div class="col m6"><strong>' + comment.author.username  + '</strong><span class="right-align" id="date">' + 
+            comment.date + '</span><p>'+ comment.text + '</p><div id ="ed' + comment._id + '">'); 
+            $("#comments").append(html2);
+            if(username && (comment.author.id == userID)){
+                $("#ed" + comment._id).append(html4);
             }
+            var html5 = '</div>';
+            $("#comments").append(html5);
+        });
+        if(username && (campground.author.id == userID)){
+            $("#editDelete").append(html3);
+        }            
+            
     });
 });
 
 $(document.body).on('click', '#delete', function(){
+   
 var urlParams1={};
     window.location.search
       .replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str,key,value) {
@@ -85,13 +91,14 @@ var urlParams1={};
 });
 
 $(document.body).on('click', '.deleteComment' ,function(){
+     var id = $(this).attr('id');
 var urlParams2={};
     window.location.search
       .replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str,key,value) {
         urlParams2[key] = value;
       });
  $.ajax({
-    url: 'https://webdevbootcamp-sarahjer.c9users.io/campgrounds/'+ urlParams2['id'] + '/comments/' + urlParams2['comment_id'],
+    url: 'https://webdevbootcamp-sarahjer.c9users.io/campgrounds/'+ urlParams2['id'] + '/comments/' + id,
     type: 'DELETE',
     success: function(data){
         window.location.href = '/show/?id='+ urlParams2['id'];

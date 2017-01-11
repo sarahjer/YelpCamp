@@ -310,8 +310,6 @@ app.post('/login', function(req, res) {
     if (err) 
         console.log(err);
     if (!user) {
-        console.log("From Server Page")
-        console.log(user);
       res.send({ success: false, message: 'Authentication failed. User not found.' });
     } else {
       // Check if password matches
