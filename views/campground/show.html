@@ -80,6 +80,7 @@ var urlParams1={};
  $.ajax({
     url: 'https://webdevbootcamp-sarahjer.c9users.io/campgrounds/'+urlParams1['id'],
     type: 'DELETE',
+    beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
     success: function(data){
         window.location.href = '/campgrounds';
         console.log(data);
@@ -100,6 +101,7 @@ var urlParams2={};
  $.ajax({
     url: 'https://webdevbootcamp-sarahjer.c9users.io/campgrounds/'+ urlParams2['id'] + '/comments/' + id,
     type: 'DELETE',
+    beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
     success: function(data){
         window.location.href = '/show/?id='+ urlParams2['id'];
         console.log(data);

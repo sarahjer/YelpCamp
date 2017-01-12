@@ -144,7 +144,7 @@ app.get("/edit", function(req, res){
 });
 
 // UPDATE CAMPGROUND ROUTE
-app.put("/edit/:id", function(req, res){
+app.put("/edit/:id",passport.authenticate('jwt', { session: false }), function(req, res){
 //   find and update the correct campground
     var name = req.body.name;
     var image = req.body.image;
@@ -161,7 +161,7 @@ app.put("/edit/:id", function(req, res){
 });
 
 // DESTROY CAMPGROUND ROUTE
-app.delete("/campgrounds/:id",  function(req, res){
+app.delete("/campgrounds/:id",passport.authenticate('jwt', { session: false }),  function(req, res){
     Campground.findByIdAndRemove(req.params.id, function(err){
         if(err){
           return  res.json({success: false, message: "Cannot Delete Campground"});
@@ -172,7 +172,7 @@ app.delete("/campgrounds/:id",  function(req, res){
 });
 
 // Comment Routes
-apiRoutes.get("/campgrounds/:id/comments/new", function(req, res){
+apiRoutes.get("/campgrounds/:id/comments/new",passport.authenticate('jwt', { session: false }), function(req, res){
     // find campground By id
     Campground.findById(req.params.id, function(err, campground){
         if(err){
@@ -223,7 +223,7 @@ app.post("/comments/:id", passport.authenticate('jwt', { session: false }), func
 });
 
 // COMMENTS EDIT ROUTE
-apiRoutes.get("/campgrounds/:id/comments/edit/:comment_id", function(req, res){
+apiRoutes.get("/campgrounds/:id/comments/edit/:comment_id",passport.authenticate('jwt', { session: false }), function(req, res){
     Comment.findById(req.params.comment_id, function(err, foundComment){
         if(err){
             console.log(err);
@@ -253,7 +253,7 @@ app.put("/campgrounds/:id/comments/:comment_id",passport.authenticate('jwt', { s
 });
 
 // COMMENT DESTROY ROUTE
-app.delete("/campgrounds/:id/comments/:comment_id",  function(req, res){
+app.delete("/campgrounds/:id/comments/:comment_id",passport.authenticate('jwt', { session: false }),  function(req, res){
     // findByIdAndRemove
     Comment.findByIdAndRemove(req.params.comment_id, function(err){
         if(err){

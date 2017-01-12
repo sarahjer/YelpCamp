@@ -24,9 +24,9 @@
 <div id="footer"></div>
 <script> 
 $(document).ready(function() {
-//  if(!window.localStorage.getItem('token')){
-//      window.location.href = ("/login");
-//  }
+ if(!window.localStorage.getItem('token')){
+     window.location.href = ("/login");
+ }
 //   $("#header").load("../partials/header.html"); 
   $("#footer").load("../partials/footer.html"); 
     $.ajax({
@@ -38,7 +38,7 @@ $(document).ready(function() {
             $.each(campgrounds , function (i, campground) {
                 $.each(campground, function(j, campground){
                     var html = "";
-                    html += ('<div class="row " style="width:420px; left:20px; display: inline-block; margin-right: 40px;">' +
+                    html += ('<div class="row" style="width:400px; left:20px; display: inline-block; margin-right: 40px;">' +
                                 '<div class="col m4"><div class="card small" ><div class="card-title"></div>' +
                                 '<div class="card-image" id="campgroundImage"><img src="' + campground.image + '">' + 
                                 '<span class="card-title" id="campgroundName">' + campground.name + '</div><div class="card-action">' +
