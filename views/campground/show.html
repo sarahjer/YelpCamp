@@ -12,10 +12,10 @@
         </div>
         <div class="col m9">
             <div class="card card-image">
-                <div id="show">
+                <span id="show">
                     <!--<h4 class="right-align">$9.00/night</h4><h4><a><%= campground.name %></a></h4><p><%= campground.description %></p><p><em>Submitted By <%= campground.author.username %></em></p>-->
-                </div>
-                <div id ="editDelete"></div>
+                </span>
+                <span id ="editDelete"></span>
             </div>
             <div class="text-right" id="newcomment">
                 
@@ -37,10 +37,11 @@ $(document).ready(function() {
         var campground = JSON.parse(result).campgrounds;
         var html = "";
             html += ('<img class="responsive-img" src="'+ campground.image + '"><span><a>'+ campground.name +'</a></span>'+
-            '<span class="right-align">$9.00/night</span><p><em>'+ campground.description + '<p><em>Submitted By ' + campground.author.username + '</em></p>');
+            '<span class="right-align">$9.00/night</span><p><em>'+ campground.description + '<p><em>Submitted By ' + campground.author.username + '</em></p>' +
+             '<a class="btn btn-small waves-light like"><i class="material-icons">thumb_up</i></a><span name="counter" id="counter">'+ campground.like +'</span> ');
         var html3 = "";
-            html3 += (' <a class="btn btn-small waves-light edit" href="/edit/?id='+ campground._id + '">Edit</a>' +
-            '</p></div><button class="btn btn-small waves-effect waves-light delete" style="display: inline;" id="delete">Delete</button>');
+            html3 += ('<a class="btn btn-small waves-light edit" href="/edit/?id='+ campground._id + '"><i class="material-icons">mode_edit</i></a>' +
+            '</p></span><button class="btn btn-small waves-light delete" id="delete"><i class="material-icons">delete</i></button>');
         var html1 = "";
             html1 = '<a class="btn btn-success" href="/comments/new/?id='+ campground._id +'">Add New Comment</a>';
         
@@ -69,6 +70,23 @@ $(document).ready(function() {
             
     });
 });
+$(document.body).on('click', '.like', function(){
+    var urlParams1={};
+    window.location.search
+      .replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str,key,value) {
+        urlParams1[key] = value;
+      });
+$('#counter').html(function(i, val) { return +val+1; });   
+var like = $('#counter').html();
+   $.ajax({
+            url: 'https://webdevbootcamp-sarahjer.c9users.io/campgrounds/'+urlParams1['id'],
+            type: 'PUT',
+            data: {like: like},
+            beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
+            success: function() { console.log('Request has returned'); }
+        });
+        // return +val+1;
+}); 
 
 $(document.body).on('click', '#delete', function(){
    

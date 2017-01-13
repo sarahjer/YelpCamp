@@ -11,13 +11,17 @@ var campgroundSchema = new mongoose.Schema({
         },
         username: String
     },
+    like: 
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
     comments: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Comment"
         },
-        ],
-    like: Number
+        ]
 });
 
 module.exports = mongoose.model("Campground", campgroundSchema);

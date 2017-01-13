@@ -96,13 +96,15 @@ h4{
 
 .btn.delete, .btn.deleteComment{
     background-color: crimson;
+    display: inline;
 }
 
 form {
     width: 30%;
 }
 
-.btn.edit{
+.btn.edit .btn.like{
+    display: inline;
     float: left;
     text-decoration: none;
     font-style: normal;
@@ -116,4 +118,9 @@ hr{
 
 p {
     margin-bottom: auto;
+}
+
+.material-icons {
+    float: left;
+    padding-right: 5px;
 }

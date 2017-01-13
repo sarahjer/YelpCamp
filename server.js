@@ -11,6 +11,7 @@ var User = require('./app/models/user');
 var path = require('path');
 var Campground = require("./app/models/campground");
 var Comment = require("./app/models/comment");
+var Like = require("./app/models/like");
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -74,8 +75,10 @@ app.post("/campgrounds/new", passport.authenticate('jwt', { session: false }), f
         'id': req.user._id,
         'username': req.user.username
     };
-    
-    var newCampground = {name: name, image: image, description: desc, author: author};
+    var like = {
+        'likes': 0
+    };
+    var newCampground = {name: name, image: image, description: desc, author: author, like: like};
     // Create a new campground and save to DB
     Campground.create(newCampground, function(err, newlyCreated){
         if(err) {
@@ -92,20 +95,6 @@ app.post("/campgrounds/new", passport.authenticate('jwt', { session: false }), f
 app.get('/campgrounds/new', function(req, res){
   res.sendFile(path.join(__dirname +'/views/campground/new.html'));
 });
-   
-
-// apiRoutes.get('/campgrounds/:id', function(req, res){
-//     //  find the campground with provided id
-//      Campground.findById(req.params.id, function(err, foundCampground){
-//         if(err){
-//             console.log(err);
-//         } else {
-//             res.send(JSON.stringify({campgrounds: foundCampground}));
-//         }
-//         return apiRoutes;
-//     });
-// });
-
 
 apiRoutes.get('/campgrounds/:id', function(req, res){
     //  find the campground with provided id
@@ -171,6 +160,34 @@ app.delete("/campgrounds/:id",passport.authenticate('jwt', { session: false }), 
     });
 });
 
+// like Route
+app.put("/campgrounds/:id", passport.authenticate('jwt', { session: false }), function(req, res){
+    var like = req.body.like;
+    // find campground By id
+    Campground.findById(req.params.id, function(err, campground){
+        if(err){
+            console.log(err);
+            res.json({success: false, message: "Cannot find Campground"});
+        } else {
+            var updatedLikes = {likes: like};
+            Like.create(updatedLikes, function(err, like){
+                if(err){
+                    res.json({success: false, message: "Cannot like"});
+                    console.log(err);
+                } else {
+                     // add username and id to comment
+                    like.author.id = req.user._id;
+                    // save comment
+                    like.save();
+                    like.authors.push(like);
+                    campground.save();
+                    res.json({success: true, message: "Successfully Liked"});
+                    }            
+    });
+        }
+    });
+    });
+    
 // Comment Routes
 apiRoutes.get("/campgrounds/:id/comments/new",passport.authenticate('jwt', { session: false }), function(req, res){
     // find campground By id
@@ -209,8 +226,6 @@ app.post("/comments/:id", passport.authenticate('jwt', { session: false }), func
                     // add username and id to comment
                     comment.author.id = req.user._id;
                     comment.author.username = req.user.username;
-                    console.log("*****Author Name*****");
-                    console.log(req.user);
                     // save comment
                     comment.save();
                     campground.comments.push(comment);
@@ -253,7 +268,7 @@ app.put("/campgrounds/:id/comments/:comment_id",passport.authenticate('jwt', { s
 });
 
 // COMMENT DESTROY ROUTE
-app.delete("/campgrounds/:id/comments/:comment_id",passport.authenticate('jwt', { session: false }),  function(req, res){
+app.delete("/campgrounds/:id/comments/:comment_id",  function(req, res){
     // findByIdAndRemove
     Comment.findByIdAndRemove(req.params.comment_id, function(err){
         if(err){
@@ -317,7 +332,7 @@ app.post('/login', function(req, res) {
         if (isMatch && !err) {
           // Create token if the password matched and no error was thrown
           var token = jwt.sign(user.toObject(), config.secret, {
-            expiresIn: 10080 // in seconds
+            // expiresIn: 10080 // in seconds
           });
           res.send({ success: true, token: 'JWT ' + token, user: user, redirect: true, redirectURL: '/campgrounds' });
           
