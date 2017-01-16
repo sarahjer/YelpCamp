@@ -11,11 +11,7 @@ var campgroundSchema = new mongoose.Schema({
         },
         username: String
     },
-    like: 
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
-        },
+    like: Number,
     comments: [
         {
             type: mongoose.Schema.Types.ObjectId,
