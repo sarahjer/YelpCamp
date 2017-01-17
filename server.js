@@ -162,53 +162,42 @@ app.delete("/campgrounds/:id",passport.authenticate('jwt', { session: false }), 
 
 // like Route
 app.put("/campgrounds/:id", passport.authenticate('jwt', { session: false }), function(req, res){
-    var like = req.body.like;
-    var updatedLikes = {like: like};
-    // find campground By id
-    Campground.findByIdAndUpdate(req.params.id, updatedLikes, function(err, campground){
+ Like.findOne({authors:'585320b7e42669075170e8da'},
+ {campground:'5878687dea403a2a133849e5'},function(err,like){
+     if(err){
+         console.log(err);
+     } else {
+         console.log(like);
+     }
+ });
+
+    Campground.findByIdAndUpdate(req.params.id,
+        { $inc: { "like": 1 }},
+        {new : true}
+    , function(err, campground){
         if(err){
-            return res.json({ success: false, message: 'Cannot update campground.', });
+            console.log(err);
         } else {
+            var noOfLikes = campground.like;
             var author =  req.user._id;
             var newLikes = {authors: author};
             // redirect somewhere
-                Like.create(newLikes, function(err, like){
+            Like.create(newLikes, function(err, like){
                 if(err){
                     res.json({success: false, message: "Cannot like"});
                     console.log(err);
                 } else {
                      // add authorid to like
-                    // like.authors = req.user._id;
                     like.campground = req.params.id;
                     // save like
                     like.save();
                     like.authors.push(like);
-                    res.json({success: true, message: "Successfully Liked"});
-                    // return res.json({ success: true, message: 'Campground Updated Successfully.', });
-
-                }        
+                    res.json({success: true, noOfLikes: noOfLikes, message: "Successfully Liked"});
+                }
             });
         }
     });
-    });
-        // if(err){
-        //     console.log(err);
-        //     res.json({success: false, message: "Cannot find Campground"});
-        // } else {
-        //     var updatedLikes = {likes: like};
-        //     Like.create(updatedLikes, function(err, like){
-        //         if(err){
-        //             res.json({success: false, message: "Cannot like"});
-        //             console.log(err);
-        //         } else {
-        //              // add username and id to comment
-        //             like.author.id = req.user._id;
-        //             // save comment
-        //             like.save();
-        //             like.authors.push(like);
-        //             campground.save();
-        //             res.json({success: true, message: "Successfully Liked"});
-        //             }            
+});
     
     
 // Comment Routes

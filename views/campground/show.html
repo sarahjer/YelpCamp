@@ -76,16 +76,23 @@ $(document.body).on('click', '.like', function(){
       .replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str,key,value) {
         urlParams1[key] = value;
       });
-$('#counter').html(function(i, val) { return +val+1; });   
-var like = $('#counter').html();
+if(!(window.localStorage.getItem('token'))){
+    window.location = '/login';
+}
+   
    $.ajax({
             url: 'https://webdevbootcamp-sarahjer.c9users.io/campgrounds/'+urlParams1['id'],
             type: 'PUT',
-            data: {like: like},
+            // data: {increment: true},
             beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
-            success: function() { console.log('Request has returned'); }
+            success: function(data) { var likes = data.noOfLikes;
+            $('#counter').html(function(i,val)
+            {
+                return likes;
+            });
+            }
         });
-        // return +val+1;
+        
 }); 
 
 $(document.body).on('click', '#delete', function(){
