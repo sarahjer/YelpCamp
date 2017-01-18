@@ -105,7 +105,7 @@ form {
 
 .btn.edit .btn.like{
     display: inline;
-    float: left;
+    /*float: left;*/
     text-decoration: none;
     font-style: normal;
     background-color: orange;

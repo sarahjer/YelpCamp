@@ -23,12 +23,17 @@ $(document).ready(function() {
       .replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str,key,value) {
         urlParams[key] = value;
       });
-    $.get('https://webdevbootcamp-sarahjer.c9users.io/api/campgrounds/'+urlParams['id']+ '/comments/new', function(result){
+    $.ajax({
+        url: 'https://webdevbootcamp-sarahjer.c9users.io/api/campgrounds/'+urlParams['id']+ '/comments/new',
+        type: 'GET', 
+        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
+        success: function(result){
         var campground = JSON.parse(result).campground;
         var html = "";
         html += '<h1 style="text-align: center;">Add New Comment to ' + campground.name + '</h1>';
     $("#comment").append(html);
-
+        }
+    });
 $("#submit").click( function(){
 
 var text = document.getElementById("text").value;
@@ -50,7 +55,6 @@ $.ajax({
         error: function(data){
           console.log(data);
         }
-});
 });
 });
 });

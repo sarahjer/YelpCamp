@@ -162,19 +162,12 @@ app.delete("/campgrounds/:id",passport.authenticate('jwt', { session: false }), 
 
 // like Route
 app.put("/campgrounds/:id", passport.authenticate('jwt', { session: false }), function(req, res){
- Like.findOne({authors:'585320b7e42669075170e8da'},
- {campground:'5878687dea403a2a133849e5'},function(err,like){
-     if(err){
+Like.findOne({authors: req.user._id,
+ campground: req.params.id},function(err,like){
+    if(err){
          console.log(err);
-     } else {
-         console.log(like);
-     }
- });
-
-    Campground.findByIdAndUpdate(req.params.id,
-        { $inc: { "like": 1 }},
-        {new : true}
-    , function(err, campground){
+    } else if(like == null){
+        Campground.findByIdAndUpdate(req.params.id, { $inc: { "like": 1 }}, {new : true}, function(err, campground){
         if(err){
             console.log(err);
         } else {
@@ -191,12 +184,16 @@ app.put("/campgrounds/:id", passport.authenticate('jwt', { session: false }), fu
                     like.campground = req.params.id;
                     // save like
                     like.save();
-                    like.authors.push(like);
                     res.json({success: true, noOfLikes: noOfLikes, message: "Successfully Liked"});
                 }
             });
         }
     });
+         } else {
+             console.log(like);
+             res.json({success:false, message:"Already Liked"});
+         }
+ });
 });
     
     
