@@ -22,10 +22,11 @@ $("#button").click( function(){
         username : document.getElementById("username").value,
         password : document.getElementById("password").value
     };
+    console.log(credentials.username);
         $.ajax({
             url: 'https://webdevbootcamp-sarahjer.c9users.io/login',
             type: 'POST', 
-            data: { username: credentials.username, password: credentials.password },
+            data: { username: credentials.username.toLowerCase(), password: credentials.password },
             success: function(Data) {
                      window.localStorage.setItem('token', Data.token);
                      window.localStorage.setItem('User', credentials.username);

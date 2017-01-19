@@ -30,7 +30,7 @@ $("#button").click( function(){
                window.localStorage.setItem('token', Data.token);
                if(Data.redirect) {
                   window.location.href = Data.redirectURL;
-               window.localStorage.setItem('user', credentials.username);
+               window.localStorage.setItem('User', credentials.username);
                }
               },
       // headers: {"Authorization": window.localStorage.getItem('token')},

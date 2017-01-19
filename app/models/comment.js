@@ -1,5 +1,7 @@
 var mongoose = require("mongoose");
-
+// var dateFormat = require('dateformat');
+// var now = new Date();
+// dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");
 var commentSchema = mongoose.Schema({
     text: String,
     author: {
@@ -11,7 +13,7 @@ var commentSchema = mongoose.Schema({
     },
     date: {
         type: Date,
-        default: Date.now(),
+        default: Date(),
         timestamps: { createdAt: 'created_at' }
     }
 });

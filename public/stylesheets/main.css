@@ -1,23 +1,32 @@
-nav .nav-wrapper {
-    background-color: #E7ECF7; 
+nav, .nav-wrapper {
+    background-color: #00796B; 
 }
 
 .section.white {
-    background-color: #E7ECF7 !important;
+    background-color: #00796B !important;
 }
 
 nav ul a {
-    color: #000;
+    color: #fff;
+}
+
+nav .brand-logo {
+    color: #fff;
+    font-size: 1.5rem;
+    padding-left: 4px;
 }
 
 .jumbotron {
-    background-color: #E7ECF7;
+    background-color: #E0F2F1;
     height: 250px;
     width: 75%;
+    text-align: center;
+    margin-top: 20px;
 }
 
-h1 {
+h2 {
     padding-top: 30px;
+    color: #EEEEEE;
 }
 
 #campgroundImage {
@@ -29,15 +38,10 @@ h1 {
 }
 
 .center-cols > .col {
-  float:none; /* disable the float */
-  display: inline-block; /* make blocks inline-block */
-  text-align: center; /* restore text-align to default */
+  float:none; 
+  display: inline-block; 
+  text-align: center; 
 }
-
-/*img {*/
-/*    height: 270px;*/
-/*}*/
-
 
 .responsive-img {
   padding-top: 50px; 
@@ -88,27 +92,25 @@ h4{
     padding: 0 1rem;
     margin: 10px 10px;
     font-size: .8em;
-    /*margin: auto;*/
     margin-right: 10px;
-    height: 25px;
-    line-height: 26px;
+    background-color: #009688;
 }
 
 .btn.delete, .btn.deleteComment{
     background-color: crimson;
-    display: inline;
+    /*display: inline;*/
 }
 
 form {
     width: 30%;
 }
 
-.btn.edit .btn.like{
-    display: inline;
-    /*float: left;*/
-    text-decoration: none;
-    font-style: normal;
+.btn.edit{
     background-color: orange;
+}
+
+.btn.like{
+    background-color: #FF4081;
 }
 
 hr{
@@ -124,3 +126,9 @@ p {
     float: left;
     padding-right: 5px;
 }
+
+img {
+    margin-top: 25px;
+}
+
+

@@ -13,7 +13,7 @@
         <div class="col m9">
             <div class="card card-image">
                 <span id="show">
-                    <!--<h4 class="right-align">$9.00/night</h4><h4><a><%= campground.name %></a></h4><p><%= campground.description %></p><p><em>Submitted By <%= campground.author.username %></em></p>-->
+                 
                 </span>
                 <span id ="editDelete"></span>
             </div>
@@ -53,7 +53,7 @@ $(document).ready(function() {
         $.each(comments, function(i, comment){
             var html4 = "";
             html4 = ('<a class="btn btn-small waves-light edit" href="/comments/edit?id='+ campground._id +'&comment_id='+ comment._id +
-                '">Edit</a><a class="btn btn-small waves-effect waves-light deleteComment" id=' + comment._id + ' >Delete</a>');
+                '"><i class="material-icons">mode_edit</i></a><a class="btn btn-small waves-effect waves-light deleteComment" id=' + comment._id + ' ><i class="material-icons">delete</i></a><div><hr></div>');
             var html2 = "";
             html2 += ('<div class="row"><div class="col m6"><strong>' + comment.author.username  + '</strong><span class="right-align" id="date">' + 
             comment.date + '</span><p>'+ comment.text + '</p><div id ="ed' + comment._id + '">'); 
@@ -79,19 +79,20 @@ $(document.body).on('click', '.like', function(){
 if(!(window.localStorage.getItem('token'))){
     window.location = '/login';
 }
-   
    $.ajax({
-            url: 'https://webdevbootcamp-sarahjer.c9users.io/campgrounds/'+urlParams1['id'],
-            type: 'PUT',
-            // data: {increment: true},
-            beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
-            success: function(data) { var likes = data.noOfLikes;
+        url: 'https://webdevbootcamp-sarahjer.c9users.io/campgrounds/'+urlParams1['id'],
+        type: 'PUT',
+        // data: {increment: true},
+        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
+        success: function(data) { 
+            var likes = data.noOfLikes;
             $('#counter').html(function(i,val)
             {
                 return likes;
             });
-            }
-        });
+            $('#like').addClass("green");
+        }
+    });
         
 }); 
 

@@ -39,8 +39,6 @@ var apiRoutes = express.Router();
 
 app.use(function(req, res, next){
     res.locals.currentUser = req.user;
-    // res.locals.error = req.flash("error");
-    // res.locals.success = req.flash("success");
     next();
 });
 
@@ -68,6 +66,7 @@ app.get('/campgrounds', function(req, res){
 
 app.post("/campgrounds/new", passport.authenticate('jwt', { session: false }), function(req, res){
     // get data from form and add to campgrounds array
+
     var name = req.body.name;
     var image = req.body.image;
     var desc = req.body.description;
@@ -75,10 +74,8 @@ app.post("/campgrounds/new", passport.authenticate('jwt', { session: false }), f
         'id': req.user._id,
         'username': req.user.username
     };
-    var like = {
-        'likes': 0
-    };
-    var newCampground = {name: name, image: image, description: desc, author: author, like: like};
+    var like = 0;
+    var newCampground = {name: name, image: image, description: desc, author: author, like:like};
     // Create a new campground and save to DB
     Campground.create(newCampground, function(err, newlyCreated){
         if(err) {
