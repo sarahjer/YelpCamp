@@ -33,7 +33,7 @@ $(document).ready(function() {
       .replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str,key,value) {
         urlParams[key] = value;
       });
-    $.get('https://webdevbootcamp-sarahjer.c9users.io/api/campgrounds/'+urlParams['id'], function(result){
+    $.get('https://desolate-ridge-10860.herokuapp.com/api/campgrounds/'+urlParams['id'], function(result){
         var campground = JSON.parse(result).campgrounds;
         var html = "";
             html += ('<img class="responsive-img" src="'+ campground.image + '"><span><a>'+ campground.name +'</a></span>'+
@@ -80,7 +80,7 @@ if(!(window.localStorage.getItem('token'))){
     window.location = '/login';
 }
    $.ajax({
-        url: 'https://webdevbootcamp-sarahjer.c9users.io/campgrounds/'+urlParams1['id'],
+        url: 'https://desolate-ridge-10860.herokuapp.com/campgrounds/'+urlParams1['id'],
         type: 'PUT',
         // data: {increment: true},
         beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
@@ -104,7 +104,7 @@ var urlParams1={};
         urlParams1[key] = value;
       });
  $.ajax({
-    url: 'https://webdevbootcamp-sarahjer.c9users.io/campgrounds/'+urlParams1['id'],
+    url: 'https://desolate-ridge-10860.herokuapp.com/campgrounds/'+urlParams1['id'],
     type: 'DELETE',
     beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
     success: function(data){
@@ -125,7 +125,7 @@ var urlParams2={};
         urlParams2[key] = value;
       });
  $.ajax({
-    url: 'https://webdevbootcamp-sarahjer.c9users.io/campgrounds/'+ urlParams2['id'] + '/comments/' + id,
+    url: 'https://desolate-ridge-10860.herokuapp.com/campgrounds/'+ urlParams2['id'] + '/comments/' + id,
     type: 'DELETE',
     beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
     success: function(data){

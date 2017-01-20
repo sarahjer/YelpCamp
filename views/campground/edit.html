@@ -39,7 +39,7 @@ var editCamp = {
         urlParams1[key] = value;
       });
 $.ajax({
-        url: 'https://webdevbootcamp-sarahjer.c9users.io/edit/'+ urlParams1['id'],
+        url: 'https://desolate-ridge-10860.herokuapp.com/edit/'+ urlParams1['id'],
         type: 'PUT', 
         data: {name: editCamp.name, image: editCamp.image, description: editCamp.description},
         beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},

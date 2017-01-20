@@ -42,7 +42,7 @@ var camp = {
 };
 
 $.ajax({
-        url: 'https://webdevbootcamp-sarahjer.c9users.io/campgrounds/new',
+        url: 'https://desolate-ridge-10860.herokuapp.com/campgrounds/new',
         type: 'POST', 
         data: { name: camp.name, image: camp.image, description: camp.description},
         beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},

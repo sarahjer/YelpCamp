@@ -32,7 +32,7 @@ $(document).ready(function() {
 //   $("#header").load("../partials/header.html"); 
   $("#footer").load("../partials/footer.html"); 
     $.ajax({
-        url: 'https://webdevbootcamp-sarahjer.c9users.io/api/campgrounds',
+        url: 'https://desolate-ridge-10860.herokuapp.com/api/campgrounds',
         type: 'GET', 
         beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
         success: function(data) {

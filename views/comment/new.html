@@ -24,7 +24,7 @@ $(document).ready(function() {
         urlParams[key] = value;
       });
     $.ajax({
-        url: 'https://webdevbootcamp-sarahjer.c9users.io/api/campgrounds/'+urlParams['id']+ '/comments/new',
+        url: 'https://desolate-ridge-10860.herokuapp.com/api/campgrounds/'+urlParams['id']+ '/comments/new',
         type: 'GET', 
         beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
         success: function(result){
@@ -44,7 +44,7 @@ var urlParams1={};
         urlParams1[key] = value;
       });
 $.ajax({
-        url: 'https://webdevbootcamp-sarahjer.c9users.io/comments/' + urlParams1['id'],
+        url: 'https://desolate-ridge-10860.herokuapp.com/comments/' + urlParams1['id'],
         type: 'POST', 
         data: { text: text},
         beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},

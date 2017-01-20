@@ -22,7 +22,7 @@ $("#button").click( function(){
         password : document.getElementById("password").value
     };
    $.ajax({
-      url: 'https://webdevbootcamp-sarahjer.c9users.io/register',
+      url: 'https://desolate-ridge-10860.herokuapp.com/register',
       type: 'POST', 
       data: { username: credentials.username, password: credentials.password },
       success: function(Data) {
