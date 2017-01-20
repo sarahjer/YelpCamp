@@ -1,7 +1,10 @@
 {
   "name": "yelpcamp1",
   "version": "1.0.0",
-  "description": "",
+  "description": "A really cool app",
+   "engines": {
+    "node": "4.5.0"
+  },
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
