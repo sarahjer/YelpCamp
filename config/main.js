@@ -1,4 +1,4 @@
 module.exports = {  
 'secret': 'somethingtopsecrethere',  
-'database': 'mongodb://127.0.0.1:27017/yelp_camp1'  
+'database': 'mongodb://sarah:Sjjeremi!7@ds117899.mlab.com:17899/campbook'  
 };
