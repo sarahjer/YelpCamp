@@ -36,7 +36,7 @@ $("#button").click( function(){
                         window.location.href = Data.redirectURL;
                      }
                     },
-            
+            beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
             error: function() {
                     alert('Error occured');
                     }

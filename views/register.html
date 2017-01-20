@@ -33,7 +33,7 @@ $("#button").click( function(){
                window.localStorage.setItem('User', credentials.username);
                }
               },
-      // headers: {"Authorization": window.localStorage.getItem('token')},
+      beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
       error: function() {
               alert('Error occured');
               }
