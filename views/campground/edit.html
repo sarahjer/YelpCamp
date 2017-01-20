@@ -15,7 +15,7 @@ $(document).ready(function() {
         urlParams[key] = value;
       }
     );
-    $.get('https://webdevbootcamp-sarahjer.c9users.io/api/campgrounds/'+urlParams['id']+ '/edit', function(result){
+    $.get('https://desolate-ridge-10860.herokuapp.com/api/campgrounds/'+urlParams['id']+ '/edit', function(result){
         var campground = JSON.parse(result).campgrounds;
         var html = "";
             html += ('<h1 style="text-align: center;">Edit ' + campground.name + '</h1><div style="width: 30%; margin: 25px auto">' +

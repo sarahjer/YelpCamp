@@ -324,9 +324,8 @@ app.get("/login", function(req, res) {
 
 // Authenticate the user and get a JSON Web Token to include in the header of future requests.
 app.post('/login', function(req, res) {  
-    console.log(req.body.username);
   User.findOne(
-    {username: req.body.username}, 
+    {username: req.body.username.toLowerCase()}, 
     function(err, user) {
     if (err) 
         console.log(err);

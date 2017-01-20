@@ -26,7 +26,7 @@ $("#button").click( function(){
         $.ajax({
             url: 'https://desolate-ridge-10860.herokuapp.com/login',
             type: 'POST', 
-            data: { username: credentials.username.toLowerCase(), password: credentials.password },
+            data: { username: credentials.username, password: credentials.password },
             success: function(Data) {
                      window.localStorage.setItem('token', Data.token);
                      window.localStorage.setItem('User', credentials.username);
