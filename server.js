@@ -89,7 +89,7 @@ app.post("/campgrounds/new", passport.authenticate('jwt', { session: false }), f
 });
 
 // NEW - show form to create new campground
-app.get('/campgrounds/new', function(req, res){
+app.get('/campgrounds/new',passport.authenticate('jwt', { session: false }), function(req, res){
   res.sendFile(path.join(__dirname +'/views/campground/new.html'));
 });
 
