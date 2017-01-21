@@ -62,7 +62,7 @@ $(document.body).on('click', '.addnew', function(){
         beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
         success: function() { 
             console.log("Success");
-        
+            window.location.href = "https://desolate-ridge-10860.herokuapp.com/campgrounds/new";
         }
     });
 });
