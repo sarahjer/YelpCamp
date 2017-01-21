@@ -244,7 +244,7 @@ app.post("/comments/:id", passport.authenticate('jwt', { session: false }), func
 });
 
 // COMMENTS EDIT ROUTE
-apiRoutes.get("/campgrounds/:id/comments/edit/:comment_id",passport.authenticate('jwt', { session: false }), function(req, res){
+apiRoutes.get("/campgrounds/:id/comments/edit/:comment_id", function(req, res){
     Comment.findById(req.params.comment_id, function(err, foundComment){
         if(err){
             console.log(err);
