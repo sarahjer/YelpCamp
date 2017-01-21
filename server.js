@@ -48,7 +48,7 @@ app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname +'/views/campground/landing.html'));
 });
 
-apiRoutes.get('/campgrounds',passport.authenticate('jwt', { session: false }), function(req, res){
+apiRoutes.get('/campgrounds',function(req, res){
      Campground.find({}, function(err, allcampgrounds){
         if(err){
             console.log(err);
