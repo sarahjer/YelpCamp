@@ -33,7 +33,8 @@ $(document).ready(function() {
       .replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str,key,value) {
         urlParams[key] = value;
       });
-    $.get('https://desolate-ridge-10860.herokuapp.com/api/campgrounds/'+urlParams['id'], function(result){
+    var url = window.localStorage.getItem('appUrl');
+    $.get(url + '/api/campgrounds/'+urlParams['id'], function(result){
         var campground = JSON.parse(result).campgrounds;
         var html = "";
             html += ('<img class="responsive-img" src="'+ campground.image + '"><span><a>'+ campground.name +'</a></span>'+
@@ -43,7 +44,7 @@ $(document).ready(function() {
             html3 += ('<a class="btn btn-small waves-light edit" href="/edit/?id='+ campground._id + '"><i class="material-icons">mode_edit</i></a>' +
             '</p></span><button class="btn btn-small waves-light delete" id="delete"><i class="material-icons">delete</i></button>');
         var html1 = "";
-            html1 = '<a class="btn btn-success" href="/comments/new/?id='+ campground._id +'">Add New Comment</a>';
+            html1 = '<a class="btn btn-success addNewComment">Add New Comment</a>';
         
         $("#show").append(html);
         var username = window.localStorage.getItem('Username');
@@ -79,8 +80,9 @@ $(document.body).on('click', '.like', function(){
 if(!(window.localStorage.getItem('token'))){
     window.location = '/login';
 }
+    var url = window.localStorage.getItem('appUrl');
    $.ajax({
-        url: 'https://desolate-ridge-10860.herokuapp.com/campgrounds/'+urlParams1['id'],
+        url: url + '/campgrounds/'+urlParams1['id'],
         type: 'PUT',
         // data: {increment: true},
         beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
@@ -96,6 +98,26 @@ if(!(window.localStorage.getItem('token'))){
         
 }); 
 
+$(document.body).on('click', '.addNewComment', function(){
+    var urlParams1={};
+    window.location.search
+      .replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str,key,value) {
+        urlParams1[key] = value;
+      });
+if(!(window.localStorage.getItem('token'))){
+    window.location = '/login';
+}
+    var url = window.localStorage.getItem('appUrl');
+   $.ajax({
+        url: url + '/comments/new/?id='+urlParams1['id'],
+        type: 'GET',
+        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
+        success: function(data) { 
+           console.log(data);
+        }
+    });
+}); 
+
 $(document.body).on('click', '#delete', function(){
    
 var urlParams1={};
@@ -103,8 +125,9 @@ var urlParams1={};
       .replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str,key,value) {
         urlParams1[key] = value;
       });
+var url = window.localStorage.getItem('appUrl');
  $.ajax({
-    url: 'https://desolate-ridge-10860.herokuapp.com/campgrounds/'+urlParams1['id'],
+    url: url + '/campgrounds/'+urlParams1['id'],
     type: 'DELETE',
     beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
     success: function(data){
@@ -124,8 +147,9 @@ var urlParams2={};
       .replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str,key,value) {
         urlParams2[key] = value;
       });
+    var url = window.localStorage.getItem('appUrl');
  $.ajax({
-    url: 'https://desolate-ridge-10860.herokuapp.com/campgrounds/'+ urlParams2['id'] + '/comments/' + id,
+    url: url + '/campgrounds/'+ urlParams2['id'] + '/comments/' + id,
     type: 'DELETE',
     beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
     success: function(data){

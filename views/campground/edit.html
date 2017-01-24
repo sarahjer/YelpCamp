@@ -15,7 +15,8 @@ $(document).ready(function() {
         urlParams[key] = value;
       }
     );
-    $.get('https://desolate-ridge-10860.herokuapp.com/api/campgrounds/'+urlParams['id']+ '/edit', function(result){
+  var url = window.localStorage.getItem('appUrl');
+    $.get(url + '/api/campgrounds/'+urlParams['id']+ '/edit', function(result){
         var campground = JSON.parse(result).campgrounds;
         var html = "";
             html += ('<h1 style="text-align: center;">Edit ' + campground.name + '</h1><div style="width: 30%; margin: 25px auto">' +
@@ -38,8 +39,9 @@ var editCamp = {
       .replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str,key,value) {
         urlParams1[key] = value;
       });
+  var url = window.localStorage.getItem('appUrl');
 $.ajax({
-        url: 'https://desolate-ridge-10860.herokuapp.com/edit/'+ urlParams1['id'],
+        url: url + '/edit/'+ urlParams1['id'],
         type: 'PUT', 
         data: {name: editCamp.name, image: editCamp.image, description: editCamp.description},
         beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},

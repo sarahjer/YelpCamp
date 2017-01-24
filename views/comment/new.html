@@ -35,7 +35,9 @@ $(document).ready(function() {
         }
     });
 $("#submit").click( function(){
-
+if(!(window.localStorage.getItem('token'))){
+    window.location = '/login';
+}
 var text = document.getElementById("text").value;
 console.log(text);
 var urlParams1={};

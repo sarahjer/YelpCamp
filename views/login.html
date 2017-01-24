@@ -22,9 +22,10 @@ $("#button").click( function(){
         username : document.getElementById("username").value,
         password : document.getElementById("password").value
     };
+    var url = window.localStorage.getItem('appUrl');
     console.log(credentials.username);
         $.ajax({
-            url: 'https://desolate-ridge-10860.herokuapp.com/login',
+            url: url + '/login',
             type: 'POST', 
             data: { username: credentials.username, password: credentials.password },
             success: function(Data) {

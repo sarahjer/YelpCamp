@@ -40,9 +40,9 @@ var camp = {
   image: document.getElementById("image").value,
   description: document.getElementById("description").value,
 };
-
+var url = window.localStorage.getItem('appUrl');
 $.ajax({
-        url: 'https://desolate-ridge-10860.herokuapp.com/campgrounds/new',
+        url: url + '/campgrounds/new',
         type: 'POST', 
         data: { name: camp.name, image: camp.image, description: camp.description},
         beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},

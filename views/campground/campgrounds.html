@@ -1,9 +1,12 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <div id="header"></div>
 <script> 
- if(!window.localStorage.getItem('token')){
-     window.location.href = ("/login");
- }
+//  if(!window.localStorage.getItem('token')){
+//      window.location.href = ("/login");
+//  }
+//var url1 = 'https://desolate-ridge-10860.herokuapp.com';
+var url1 = 'https://webdevbootcamp-sarahjer.c9users.io';
+ window.localStorage.setItem('appUrl',url1);
  $(document).ready(function() {
   $("#header").load("../partials/header.html");
 });
@@ -14,7 +17,7 @@
             <img src="http://www.mycampcentral.com/wp-content/uploads/2016/04/campingTwilight-700x300.jpg">
             <!--<h2>Welcome to YelpCamp!</h2>-->
             <p>
-                <a class="btn waves-effect waves-light addnew">Add New Campground<i class="material-icons right"></i></a>
+                <a class="btn waves-effect waves-light addnew">Add New Campground<i class="material-icons right">add</i></a>
             </p>
         </div>
     </header>
@@ -26,13 +29,10 @@
 <div id="footer"></div>
 <script> 
 $(document).ready(function() {
- if(!window.localStorage.getItem('token')){
-     window.location.href = ("/login");
- }
-//   $("#header").load("../partials/header.html"); 
+ var url = window.localStorage.getItem('appUrl');
   $("#footer").load("../partials/footer.html"); 
     $.ajax({
-        url: 'https://desolate-ridge-10860.herokuapp.com/api/campgrounds',
+        url: url + '/api/campgrounds',
         type: 'GET', 
         beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
         success: function(data) {
@@ -56,14 +56,20 @@ $(document).ready(function() {
 });
 });
 $(document.body).on('click', '.addnew', function(){
+if(!(window.localStorage.getItem('token'))){
+    window.location = '/login';
+} else {
+    var url = window.localStorage.getItem('appUrl');
     $.ajax({
-        url: 'https://desolate-ridge-10860.herokuapp.com/campgrounds',
         type: 'GET',
         beforeSend: function(xhr){xhr.setRequestHeader('Authorization', window.localStorage.getItem('token'));},
-        success: function() { 
+        url: url + '/campgrounds/new',
+        success: function(data) { 
             console.log("Success");
-            window.location.href = "https://desolate-ridge-10860.herokuapp.com/campgrounds/new";
+            // window.location.href = url + "/campgrounds/new";
         }
     });
+}
 });
+
 </script> 
